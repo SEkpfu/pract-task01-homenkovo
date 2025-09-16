@@ -1,6 +1,3 @@
-// Not done yet!
-
-#include <algorithm>
 #include <iostream>
 #include <numeric>
 
@@ -50,13 +47,20 @@ int main() {
             const double full = get_full(hours[i][j], cost[i]);
             summary += 
             (pnt[0][i][j] = get_pure(full));
-            pnt[1][i][j] = get_pure(full);
+            pnt[1][i][j] = get_tax(full);
+        }
+    }
+
+    std::size_t worker_that_gets_most_in_third_month = 0;
+    for (std::size_t i = 1; i < WORKERS; ++i) {
+        if (pnt[0][i][2] > pnt[0][worker_that_gets_most_in_third_month][2]) {
+            worker_that_gets_most_in_third_month = i;
         }
     }
 
     std::cout << "Cost of first worker in second month: " << pnt[0][0][1] << std::endl
               << "Tax of third worker: " << std::accumulate(pnt[1][2], pnt[1][2] + MONTHS, 0.0, std::plus<double>()) << std::endl
-              << "Worker that gets most in third month #" <<  << std::endl
+              << "Worker that gets most in third month #" << worker_that_gets_most_in_third_month << std::endl
               << "Summary: " << summary << std::endl;
 
     return 0;
